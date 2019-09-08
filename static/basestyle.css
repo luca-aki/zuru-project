@@ -1,0 +1,16 @@
+html, body, main{
+    height: 100%;
+}
+.home{
+    display: table;
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+.hometext{
+    display: table-cell;
+    vertical-align:middle;
+    padding-bottom: 20%;
+    padding-right:10%;
+    text-align:end;
+}

@@ -1,0 +1,22 @@
+html, body{
+    height: 100%;
+}
+.home{
+    display: table;
+    position: relative;
+    width: 100%;
+}
+.hometext{
+    color: aliceblue;
+    display: table-cell;
+    vertical-align:middle;
+    padding-top: 10%;
+    padding-right:10%;
+    text-align:end;
+}
+
+@media only screen and (max-width: 768px){
+    .topheading{
+        padding-top:25%;
+    }
+}
