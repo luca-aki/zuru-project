@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'links',
     'accounts',
+    'storages', 
 ]
 
 MIDDLEWARE = [
@@ -128,3 +129,10 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+
+AZURE_ACCOUNT_NAME = 'zurustorage'
+AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/media/'
+DEFAULT_FILE_STORAGE = 'backend.custom_azure.AzureMediaStorage'

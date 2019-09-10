@@ -15,8 +15,27 @@ html, body{
     text-align:end;
 }
 
+.shorten{
+    display: none;
+}
+
+.fadeIn{
+    animation: fadeInAnim;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
 @media only screen and (max-width: 768px){
     .topheading{
         padding-top:25%;
     }
+    .longinput{
+        width: 80%;
+    }
+}
+
+@keyframes fadeInAnim{
+    0% {opacity: 0;}
+    100% {opacity: 100;}
 }

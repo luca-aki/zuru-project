@@ -2,18 +2,117 @@
 
 {% block content %}
 <main role="main" style="background-color:cornflowerblue">
-        <div class="home">
-            <div class="hometext">
-                <h1 class="topheading">zuru.io</h1>
-                <div class="land">
-                    <h4>free URL shortener and temporary file upload</h4>
-                    <button class="btn btn-light"><i class="fas fa-link"></i> Shorten URL</button>
-                    <button class="btn btn-light"><i class="fas fa-upload"></i> Upload a File</button>
-                </div>
-                <div class="shorten">
-                    <h5>Enter the URL you want to shorten</h5>
-                </div>
+    <script>
+        function shortenButtonFunction() {
+            formOld = document.getElementById('uploadform');
+            formOld.style.display = "none";
+            formOld.classList.remove('fadeIn');
+
+            form = document.getElementById('shortenform');
+            form.style.display = "block";
+            form.classList.add('fadeIn');
+            document.getElementById('shortenbutton').blur();
+            document.getElementById('urlinput').focus();
+        }
+        function uploadButtonFunction() {
+            formOld = document.getElementById('shortenform');
+            formOld.style.display = "none";
+            formOld.classList.remove('fadeIn');
+
+            form = document.getElementById('uploadform');
+            form.style.display = "block";
+            form.classList.add('fadeIn');
+            document.getElementById('shortenbutton').blur();
+            document.getElementById('urlinput').focus();
+        }
+
+    </script>
+    <style>
+        .uploadf {
+            display: none;
+        }
+
+        .longinput {
+            float: right;
+            width: 50%;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .longinput {
+                width: 80%;
+            }
+        }
+    </style>
+    <div class="home">
+        <div class="hometext">
+            {% if retlink1 %}
+            <h4 class="topheading">Generated Link: <a href="{{ retlink }}" style="color:palegreen"
+                    target="_blank">{{ retlink }}</a></h4>
+            {% elif retlink2 %}
+            <h4 class="topheading">Generated Link: <a href="{{ retlink2 }}" style="color:palegreen"
+                target="_blank">{{ retlink2 }}</a></h4>
+            {% else %}
+            <h1 class="topheading">zuru.io</h1>
+            {% endif %}
+            <div class="land">
+                <h4>free URL shortener and temporary file upload</h4>
+                <button class="btn btn-light" id="shortenbutton" onclick="shortenButtonFunction()"><i
+                        class="fas fa-link"></i> Shorten URL</button>
+                <button class="btn btn-light" id="uploadbutton" onclick="uploadButtonFunction()"><i
+                        class="fas fa-upload"></i> Upload a File</button>
+            </div>
+            <div class="shorten" id="shortenform">
+                <form method="POST" action="{% url 'home' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="url" class="form-control longinput" style="float:right;" id="urlinput"
+                            name="urlinput" placeholder="Enter the URL to shorten." required>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="checkbox">
+                        <label><input type="checkbox" name="onetimeinput"> One Time Link</label>
+                    </div>
+                    {% if user.is_authenticated %}
+                    {% else %}
+                    <h6>(Register to get custom shorten URL + much more customizations!)</h6>
+                    {% endif %}
+                    <button type="submit" class="btn btn-light">Submit</button>
+                </form>
+            </div>
+            <div class="uploadf" id="uploadform">
+                <form method="POST" action="{% url 'homeU' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="input-group" style="float:right; width:60%;margin-top: 1%;">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" onchange="onChangeInput()" name="fileinput"
+                                id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" required>
+                            <label class="custom-file-label" for="inputGroupFile01" id="inputlabel"
+                                style="text-align: left;">Choose file</label>
+                        </div>
+                        <script>
+                            function onChangeInput() {
+                                var filename = $("#inputGroupFile01").val().split('\\').pop();
+                                $('button:submit').attr('disabled', false);
+                                console.log(filename);
+                                document.getElementById('inputlabel').innerHTML = filename;
+                            }
+                        </script>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    {% if user.is_authenticated %}
+                    {% else %}
+                    <h6>(Register to get more control on your files!)</h6>
+                    {% endif %}
+                    <button type="submit" class="btn btn-light" value="{% url 'homeU' %}">Submit</button>
+                </form>
             </div>
         </div>
-    </main>
+    </div>
+</main>
 {% endblock %}
