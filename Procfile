@@ -1,0 +1,1 @@
+web: gunicorn zuru.wsgi
