@@ -159,24 +159,28 @@ def transfer(request, link_id):
     go = link.to
     # TODO: make this a background task
     if link.redirects == 1:
-        link_owner = Account.objects.get(username=link.owner)
-        link_owner_linkset = link_owner.linkset
-        link_owner_fileset = link_owner.fileset
-        for i in range(0, len(link_owner_linkset)):
-            if link_owner_linkset[i].suffix == link_id:
-                print("deleting owner link")
-                del link_owner_linkset[i]
-                break
-        if link.is_fileobject:
-            for i in range(0, len(link_owner_fileset)):
-                if link_owner_fileset[i].suffix == link_id:
-                    print("deleting owner file")
-                    del link_owner_fileset[i]
-                    fileobject = get_object_or_404(FileObject, suffix=link_id)
-                    fileobject.delete()
+        if not link.owner == User.objects.get(username='akshay'):
+            link_owner = Account.objects.get(username=link.owner)
+            link_owner_linkset = link_owner.linkset
+            link_owner_fileset = link_owner.fileset
+            for i in range(0, len(link_owner_linkset)):
+                if link_owner_linkset[i].suffix == link_id:
+                    print("deleting owner link")
+                    del link_owner_linkset[i]
                     break
+            if link.is_fileobject:
+                for i in range(0, len(link_owner_fileset)):
+                    if link_owner_fileset[i].suffix == link_id:
+                        print("deleting owner file")
+                        del link_owner_fileset[i]
+                        fileobject = get_object_or_404(FileObject, suffix=link_id)
+                        fileobject.delete()
+                        break
+            link_owner.save()
+        if link.is_fileobject:
+            fileobject = get_object_or_404(FileObject, suffix=link_id)
+            fileobject.delete()
         link.delete()
-        link_owner.save()
 
     return redirect(go)
 
