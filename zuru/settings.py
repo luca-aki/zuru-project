@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'links',
     'accounts',
     'storages', 
+    'django_cleanup',
 ]
 
 MIDDLEWARE = [

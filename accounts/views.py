@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
+from djongo import models as dmodels
+from accounts.models import Account
 
 # Create your views here.
 
@@ -12,6 +14,11 @@ def register(request):
                 return render(request, 'accounts/register.html', {'error':'Username already exists'})
             except User.DoesNotExist:
                 user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
+                account = Account()
+                account.username = User.objects.get(username=request.POST['username'])
+                account.linkset = []
+                account.fileset = []
+                account.save()
                 auth.login(request, user)
                 return redirect('home')
         else:

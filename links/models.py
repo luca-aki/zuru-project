@@ -16,6 +16,7 @@ class Link(models.Model):
     suffix = models.CharField(max_length=32)
     to = models.CharField(max_length=9000)
     is_active = models.BooleanField(default=False)
+    is_fileobject = models.BooleanField(default=False)
     redirects = models.IntegerField(default=9999)
     expiry = models.DateTimeField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -25,10 +26,20 @@ class Link(models.Model):
 
     def get_expiry_date(self):
         return self.expiry.strftime('%b %e %Y')
+    
+    def delete(self):
+        print("Delete Called")
+        Link.objects.filter(suffix=self.suffix).delete()
 
 class FileObject(models.Model):
     link = models.CharField(max_length=9999)
+    suffix = models.CharField(max_length=32, default='')
+    name = models.CharField(max_length=9999, default='NameLess')
     fileObject = models.FileField(upload_to='f/')
     expiry = models.DateTimeField()
     redirects = models.IntegerField(default=1)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def delete(self):
+        print("Object Delete Called")
+        Link.objects.filter(suffix=self.suffix).delete()

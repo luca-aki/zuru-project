@@ -1,16 +1,45 @@
-html, body, main{
+html, body{
     height: 100%;
 }
 .home{
     display: table;
     position: relative;
-    height: 100%;
     width: 100%;
 }
 .hometext{
+    color: aliceblue;
     display: table-cell;
     vertical-align:middle;
-    padding-bottom: 20%;
+    padding-top: 10%;
     padding-right:10%;
     text-align:end;
+}
+
+.shorten{
+    display: none;
+}
+
+.fadeIn{
+    animation: fadeInAnim;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@media only screen and (max-width: 768px){
+    .topheading{
+        padding-top:25%;
+    }
+    .longinput{
+        width: 80%;
+    }
+    
+    .hidemobile{
+        display: none;
+    }
+}
+
+@keyframes fadeInAnim{
+    0% {opacity: 0;}
+    100% {opacity: 100;}
 }

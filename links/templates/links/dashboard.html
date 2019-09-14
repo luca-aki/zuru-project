@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% block content %}
+<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/stacktable.js" type="text/javascript"></script>
+<main role="main" style="background-color:cornflowerblue">
+    <style>
+        .topdashboard {
+            margin-top: 8%;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .topdashboard {
+                margin-top: 15%;
+            }
+        }
+
+        .stacktable {
+            width: 100%;
+        }
+
+        .st-head-row {
+            padding-top: 1em;
+        }
+
+        .st-head-row.st-head-row-main {
+            font-size: 1.5em;
+            padding-top: 0;
+        }
+
+        .st-key {
+            width: 49%;
+            text-align: right;
+            padding-right: 1%;
+        }
+
+        .st-val {
+            width: 49%;
+            padding-left: 1%;
+        }
+
+        .stacktable.large-only {
+            display: table;
+        }
+
+        .stacktable.small-only {
+            display: none;
+        }
+
+        h2 {
+            text-align: center;
+            padding-top: 10px;
+        }
+
+        table caption {
+            padding: .5em 0;
+        }
+
+        .p {
+            text-align: center;
+            padding-top: 140px;
+            font-size: 14px;
+        }
+
+        footer{
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .stacktable.large-only {
+                display: none;
+            }
+
+            .stacktable.small-only {
+                display: table;
+            }
+
+            .hidemobile {
+                display: none;
+            }
+        }
+    </style>
+    <div class="container" style="color: aliceblue;">
+        <h1 class="topdashboard">Dashboard</h1>
+        <br>
+        <h2>Links</h2>
+        <div>
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        <th>Link</th>
+                        <th>Location</th>
+                        <th>One Time</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                {% for link in linkset %}
+                <tbody>
+                    <tr>
+                        <td>zuru.io/{{ link.suffix }}</td>
+                        <td>
+                            <p style="word-break: break-word">{{ link.to }}</p>
+                        </td>
+                        <td>{{ link.redirects }}</td>
+                        <td><button class='btn btn-danger'>Delete</button></td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+        <br>
+        <h2>Files</h2>
+        <div>
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Link</th>
+                        <th>Multi-Access</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                {% for f in fileset %}
+                <tbody>
+                    <tr>
+                        <td>{{ f.name }}</td>
+                        <td>zuru.io/{{ f.link }}</td>
+                        <td>{{ f.redirects }}</td>
+                        <td><button class='btn btn-danger'>Delete</button></td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $('document').ready(function () {
+            $('table').stacktable();
+        });
+    </script>
+</main>
+{% endblock %}

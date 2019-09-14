@@ -33,6 +33,10 @@ html, body{
     .longinput{
         width: 80%;
     }
+    
+    .hidemobile{
+        display: none;
+    }
 }
 
 @keyframes fadeInAnim{

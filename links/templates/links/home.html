@@ -37,6 +37,23 @@
             width: 50%;
         }
 
+        .shortinput {
+            float: right;
+            width: auto;
+        }
+
+        .circle {
+            margin-left: 1%;
+            margin-right: 1%;
+            height: 80px;
+            width: 80px;
+            background-color: aliceblue;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         @media only screen and (max-width: 768px) {
             .longinput {
                 width: 80%;
@@ -46,16 +63,35 @@
     <div class="home">
         <div class="hometext">
             {% if retlink1 %}
-            <h4 class="topheading">Generated Link: <a href="{{ retlink }}" style="color:palegreen"
-                    target="_blank">{{ retlink }}</a></h4>
+            <h4 class="topheading">Generated Link: <a href="{{ retlink1 }}" style="color:palegreen"
+                    target="_blank">{{ retlink1 }}</a></h4>
             {% elif retlink2 %}
             <h4 class="topheading">Generated Link: <a href="{{ retlink2 }}" style="color:palegreen"
-                target="_blank">{{ retlink2 }}</a></h4>
+                    target="_blank">{{ retlink2 }}</a></h4>
             {% else %}
             <h1 class="topheading">zuru.io</h1>
             {% endif %}
             <div class="land">
+                {% if error %}
+                <h4>{{ error }}</h4>
+                {% else %}
                 <h4>free URL shortener and temporary file upload</h4>
+                {% endif %}
+                <!--
+                    <div class="container" style="float: right; padding-right:0%; padding-left:0%; margin-bottom: 2%;">
+                        <div class="circle">
+                            <img src="/static/exam.png" width="50px" height="50px" />
+                        </div>
+                        <div class="circle">
+                            <img src="/static/pencil.png" width="45px" height="45px" />
+                        </div>
+                        <div class="circle">
+                            <img src="/static/shield.png" width="50px" height="50px" />
+                        </div>
+                        <br>
+                        <h5>(Shareable, Customizable and Secure!)</h5>
+                    </div>
+                -->
                 <button class="btn btn-light" id="shortenbutton" onclick="shortenButtonFunction()"><i
                         class="fas fa-link"></i> Shorten URL</button>
                 <button class="btn btn-light" id="uploadbutton" onclick="uploadButtonFunction()"><i
@@ -70,11 +106,19 @@
                     </div>
                     <br>
                     <br>
+                    {% if user.is_authenticated %}
+                    <div class="form-group">
+                        <input type="text" class="form-control shortinput" style="float:right;" id="suffixinput"
+                            name="suffixinput" placeholder="Custom URL">
+                    </div>
+                    <br>
                     <div class="checkbox">
                         <label><input type="checkbox" name="onetimeinput"> One Time Link</label>
                     </div>
-                    {% if user.is_authenticated %}
                     {% else %}
+                    <div class="checkbox">
+                        <label><input type="checkbox" name="onetimeinput"> One Time Link</label>
+                    </div>
                     <h6>(Register to get custom shorten URL + much more customizations!)</h6>
                     {% endif %}
                     <button type="submit" class="btn btn-light">Submit</button>
@@ -91,7 +135,7 @@
                             <input type="file" class="custom-file-input" onchange="onChangeInput()" name="fileinput"
                                 id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" required>
                             <label class="custom-file-label" for="inputGroupFile01" id="inputlabel"
-                                style="text-align: left;">Choose file</label>
+                                style="text-align: left;">Choose file(25MB)</label>
                         </div>
                         <script>
                             function onChangeInput() {
@@ -106,6 +150,14 @@
                     <br>
                     <br>
                     {% if user.is_authenticated %}
+                    <div class="form-group">
+                        <input type="text" class="form-control shortinput" style="float:right;" id="fsuffixinput"
+                            name="fsuffixinput" placeholder="Custom URL">
+                    </div>
+                    <br>
+                    <div class="checkbox">
+                        <label><input type="checkbox" name="multiaccess"> Non-temporary</label>
+                    </div>
                     {% else %}
                     <h6>(Register to get more control on your files!)</h6>
                     {% endif %}
@@ -113,6 +165,7 @@
                 </form>
             </div>
         </div>
+    </div>
     </div>
 </main>
 {% endblock %}
