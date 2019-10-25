@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'k#@7nh!_eu2(ok-1h86*atwazbd76rrpr0tpq!n1@pw&@byx@5'
+SECRET_KEY = os.environ.get('SECRET_KEY', None)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -83,10 +83,10 @@ WSGI_APPLICATION = 'zuru.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'zurulinkscluster',
-        'HOST': 'mongodb+srv://zuruadmin:123qwerasd@zurulinkscluster-irugu.azure.mongodb.net/test?retryWrites=true&w=majority',
-        'USER': 'zuruadmin',
-        'PASSWORD': '123qwerasd',
+        'NAME': os.environ.get('DB_NAME', None),
+        'HOST': os.environ.get('DB_HOST', None),
+        'USER': os.environ.get('DB_USER', None),
+        'PASSWORD': os.environ.get('DB_PASS', None),
     }
 }
 
@@ -134,7 +134,7 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
-AZURE_ACCOUNT_NAME = 'zurustorage'
+AZURE_ACCOUNT_NAME = os.environ.get('AZURE_ACCOUNT_NAME', None)
 AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
