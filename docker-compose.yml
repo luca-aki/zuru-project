@@ -6,8 +6,14 @@ services:
       context: .
       dockerfile: docker/Dockerfile
     volumes:
-      - ./:/zuru
+      - ./:/app
     ports:
       - 8000:8000
     environment:
-      SECRET_KEY: ${SECRET_KEY}
+      - SECRET_KEY
+      - DB_HOST
+      - DB_USER
+      - DB_PASS
+      - DB_NAME
+    command:
+      python manage.py runserver
