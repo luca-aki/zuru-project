@@ -1,0 +1,13 @@
+version: '3'
+services:
+  python:
+    # image: python:3.7.3
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ./:/zuru
+    ports:
+      - 8000:8000
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
