@@ -111,5 +111,5 @@ requests==2.22.0
 requests-oauthlib==1.2.0
 six==1.12.0
 sqlparse==0.2.4
-urllib3==1.25.3
+urllib3==1.26.5
 whitenoise==4.1.3
